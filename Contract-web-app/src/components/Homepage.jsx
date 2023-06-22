@@ -12,7 +12,7 @@ const Homepage = () => {
           <img src={homepage_image} alt="" />
         </div>
         <div className="homepage-right-container">
-          <h1>Get your Contract</h1>
+          <h1 className="text-3xl font-bold underline text-center">Get your Contract</h1>
         </div>
       </div>
     </>
