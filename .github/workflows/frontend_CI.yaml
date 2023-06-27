@@ -21,7 +21,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: ./Contract-web-app
-        run: npm install
+        run: pnpm install
 
       - name: Linting
         working-directory: ./Contract-web-app
