@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
 
+      - name: Install pnpm package manager
+        working-directory: ./Contract-web-app
+        run: npm install -g pnpm
+
       - name: Install Dependencies
         working-directory: ./Contract-web-app
         run: pnpm install
