@@ -11,18 +11,18 @@ jobs:
         node-version: [16.x]
 
     steps:
-      -name: Checkout Respository
+      - name: Checkout Respository
         uses: actions/checkout@v2
-      
-      -name: Setup Node.js ${{matrix.node-version}}
+
+      - name: Setup Node.js ${{matrix.node-version}}
         uses: actions/setup-node@v2
         with:
           node-version: ${{matrix.node-version}}
 
-      -name: Install pnpm package manager
+      - name: Install pnpm package manager
         working-directory: ./api
         run: npm install -g pnpm
 
-      -name: Install Dependencies
+      - name: Install Dependencies
         working-directory: ./api
         run: pnpm install
