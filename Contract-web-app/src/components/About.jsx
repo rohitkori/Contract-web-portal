@@ -1,5 +1,3 @@
-import { React } from "react";
-
 function About() {
   return (
     <div className="bg-gray-950 min-h-screen max-w-full pt-4 justify-evenly items-center ">
