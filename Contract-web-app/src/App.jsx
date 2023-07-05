@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { Toaster } from "react-hot-toast";
 import Homepage from "./components/Homepage";
-import Example from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Why from "./components/Why";
 import "./App.css";
@@ -11,7 +11,7 @@ function App() {
     <>
       <Router>
         <div className="app">
-          <Example />
+          <Navbar />
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/about" element={<About />} />
