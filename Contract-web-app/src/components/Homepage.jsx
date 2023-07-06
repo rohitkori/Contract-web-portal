@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import homepage_image from "../assets/homepage-image.svg";
+import Loader from "../assets/Loader.svg";
 
 const Homepage = () => {
   const [type, setType] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const DropDown = () => {
     return (
@@ -105,13 +109,16 @@ const Homepage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const position = e.target.position.value;
     const organization = e.target.organization.value;
     console.log(position, organization);
     const response = await axios.get("http://localhost:5000");
     try {
       if (response.status == 200) {
+        setLoading(false);
         console.log(response.data);
+        navigate("/contract", { state: { data: response.data } });
       } else {
         console.log("error");
       }
@@ -122,28 +129,38 @@ const Homepage = () => {
 
   return (
     <>
-      <div className="bg-gray-950 min-h-screen max-w-full pt-4  flex flex-col md:flex-row justify-evenly items-center text-center text-white ">
-        <div className="  h-3/5 w-3/5 md:h-2/5 md:w-2/5 ">
-          <img
-            src={homepage_image}
-            className="rounded-lg my-6 shadow-lg shadow-blue-950/50 hover:shadow-blue-950/100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-101"
-            alt=""
-          />
-        </div>
-        <div className="homepage-right-container flex flex-col items-center">
-          <h1 className=" text-xl sm:text-2xl md:text-4xl font-bold  text-center text-white my-1 sm:my-2 md:my-4">
-            GET YOUR CONTRACT
-          </h1>
-          {type ? (
-            <>
-              <DropDown />
-              <Details contractType={type} className="text-white" />
-            </>
-          ) : (
-            <DropDown />
-          )}
-        </div>
-      </div>
+      {loading ? (
+        <>
+          <div className="bg-gray-950 min-h-screen max-w-full pt-4  flex flex-col md:flex-row justify-evenly items-center text-center text-white ">
+            <img src={Loader} alt="" />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="bg-gray-950 min-h-screen max-w-full pt-4  flex flex-col md:flex-row justify-evenly items-center text-center text-white ">
+            <div className="  h-3/5 w-3/5 md:h-2/5 md:w-2/5 ">
+              <img
+                src={homepage_image}
+                className="rounded-lg my-6 shadow-lg shadow-blue-950/50 hover:shadow-blue-950/100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-101"
+                alt=""
+              />
+            </div>
+            <div className="homepage-right-container flex flex-col items-center">
+              <h1 className=" text-xl sm:text-2xl md:text-4xl font-bold  text-center text-white my-1 sm:my-2 md:my-4">
+                GET YOUR CONTRACT
+              </h1>
+              {type ? (
+                <>
+                  <DropDown />
+                  <Details contractType={type} className="text-white" />
+                </>
+              ) : (
+                <DropDown />
+              )}
+            </div>
+          </div>{" "}
+        </>
+      )}
     </>
   );
 };
