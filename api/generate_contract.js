@@ -1,17 +1,16 @@
-import { config } from "dotenv"
-config()
+const { Configuration, OpenAIApi } = require("openai");
+require("dotenv").config();
 
-import { Configuration, OpenAIApi} from "openai"
-
-const openai = new OpenAIApi(new Configuration({
-    apiKey: process.env.API_KEY
-}))
-    
+const openai = new OpenAIApi(
+  new Configuration({
+    apiKey: process.env.API_KEY,
+  })
+);
 
 async function fetchEmployeeContract() {
   const response = await openai.createCompletion({
-    'model': "text-davinci-003",
-    'prompt': `Write an employee job agreement for IIT Jodhpur keeping the following Sections in the document and assign bullet point to every section of the contract. Also assign a proper head and footer for the document.
+    model: "text-davinci-003",
+    prompt: `Write an employee job agreement for IIT Jodhpur keeping the following Sections in the document and assign bullet point to every section of the contract. Also assign a proper head and footer for the document.
     Sections to keep in document:
      1.Position:Head of SME, Type: Academic & Research related postion
      2.Compensation: Base compensation, Incentive Bonus
@@ -42,9 +41,11 @@ async function fetchEmployeeContract() {
     Go over each section step by step and don't move forward until you complete the section point, write each section in detail and strech the document's length. The given document should contain 2000 words
 
     `,
-    max_tokens: 3700
-  })
-  console.log(response.data.choices[0].text)
+    max_tokens: 3700,
+  });
+  console.log(response.data.choices[0].text);
+  return response.data.choices[0].text;
 }
+module.exports = { fetchEmployeeContract };
 
-fetchEmployeeContract()
+// fetchEmployeeContract()
