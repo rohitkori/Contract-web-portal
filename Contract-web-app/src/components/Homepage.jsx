@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Contract from "./Contract";
 import homepage_image from "../assets/homepage-image.svg";
 import Loader from "../assets/Loader.svg";
 
 const Homepage = () => {
   const [type, setType] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [data, setData] = useState("");
 
   const DropDown = () => {
     return (
@@ -117,8 +116,10 @@ const Homepage = () => {
     try {
       if (response.status == 200) {
         setLoading(false);
+        setData(response.data);
         console.log(response.data);
-        navigate("/contract", { state: { data: response.data } });
+        
+        // navigate("/contract", { state: { data: response.data } });
       } else {
         console.log("error");
       }
@@ -158,7 +159,8 @@ const Homepage = () => {
                 <DropDown />
               )}
             </div>
-          </div>{" "}
+            </div>
+            {data ? (<Contract data={data} />) : null}
         </>
       )}
     </>
