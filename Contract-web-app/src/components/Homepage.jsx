@@ -91,6 +91,17 @@ const Homepage = () => {
               name="organization"
               className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
             />
+            <label
+              htmlFor="typeOfPosition"
+              className="  my-1 sm:my-2 md:my-4 md:text-xl"
+            >
+              Type of Position
+            </label>
+            <input
+              type="text"
+              name="typeOfPosition"
+              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
+            />
             <div className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <input type="submit" />
             </div>
@@ -111,15 +122,18 @@ const Homepage = () => {
     setLoading(true);
     const position = e.target.position.value;
     const organization = e.target.organization.value;
+    const typeOfPosition = e.target.typeOfPosition.value;
     console.log(position, organization);
-    const response = await axios.get("http://localhost:5000");
+    const response = await axios.post("http://localhost:5000/employee", {
+      position: position,
+      organization: organization,
+      typeOfPosition: typeOfPosition,
+    });
     try {
       if (response.status == 200) {
         setLoading(false);
         setData(response.data);
         console.log(response.data);
-        
-        // navigate("/contract", { state: { data: response.data } });
       } else {
         console.log("error");
       }
@@ -159,8 +173,8 @@ const Homepage = () => {
                 <DropDown />
               )}
             </div>
-            </div>
-            {data ? (<Contract data={data} />) : null}
+          </div>
+          {data ? <Contract data={data} /> : null}
         </>
       )}
     </>
