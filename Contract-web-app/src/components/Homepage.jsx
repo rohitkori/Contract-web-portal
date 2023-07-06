@@ -1,5 +1,124 @@
+import { useState } from "react";
+import axios from "axios";
+
 import homepage_image from "../assets/homepage-image.svg";
+
 const Homepage = () => {
+  const [type, setType] = useState("");
+
+  const DropDown = () => {
+    return (
+      <>
+        {/* <button
+          id="dropdownDefaultButton"
+          data-dropdown-toggle="dropdown"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          type="button"
+          onClick={handleDropDown}
+        >
+          Contract Type
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m1 1 4 4 4-4"
+          />
+        </button>
+
+        <div
+          id="dropdown"
+          className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+        >
+          <ul
+            className="py-2 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownDefaultButton"
+          >
+            <li className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Employee
+            </li>
+          </ul>
+        </div> */}
+        <select
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          name="Type"
+          onChange={(e) => setType(e.target.value)}
+          defaultValue={type ? type : "none"}
+        >
+          <option value="none" selected disabled hidden>
+            Select an option
+          </option>
+          <option
+            value="Employee"
+            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >
+            Employee
+          </option>
+          <option value="Other">Other</option>
+        </select>
+      </>
+    );
+  };
+
+  const Details = (props) => {
+    const contractType = props.contractType;
+    if (contractType === "Employee") {
+      return (
+        <>
+          <form onSubmit={handleSubmit} className="flex flex-col">
+            <label
+              htmlFor="position"
+              className="  my-1 sm:my-2 md:my-4 md:text-xl"
+            >
+              Position
+            </label>
+            <input
+              type="text"
+              name="position"
+              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
+            />
+            <label
+              htmlFor="organization"
+              className="  my-1 sm:my-2 md:my-4 md:text-xl"
+            >
+              Organization
+            </label>
+            <input
+              type="text"
+              name="organization"
+              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
+            />
+            <div className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <input type="submit" />
+            </div>
+          </form>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h1>other</h1>
+        </>
+      );
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const position = e.target.position.value;
+    const organization = e.target.organization.value;
+    console.log(position, organization);
+    const response = await axios.get("http://localhost:5000");
+    try {
+      if (response.status == 200) {
+        console.log(response.data);
+      } else {
+        console.log("error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -15,14 +134,14 @@ const Homepage = () => {
           <h1 className=" text-xl sm:text-2xl md:text-4xl font-bold  text-center text-white my-1 sm:my-2 md:my-4">
             GET YOUR CONTRACT
           </h1>
-          <label htmlFor="type" className="  my-1 sm:my-2 md:my-4 md:text-xl">
-            Type
-          </label>
-          <input
-            type="text"
-            name="type"
-            className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
-          />
+          {type ? (
+            <>
+              <DropDown />
+              <Details contractType={type} className="text-white" />
+            </>
+          ) : (
+            <DropDown />
+          )}
         </div>
       </div>
     </>
