@@ -7,12 +7,12 @@ const openai = new OpenAIApi(
   })
 );
 
-async function fetchEmployeeContract(position, typeOfPosition, organization) {
+async function fetchEmployeeContract(designation, typeOfPosition, organization) {
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: `Write an employee job agreement for ${organization} keeping the following Sections in the document and assign bullet point to every section of the contract. Also assign a proper head and footer for the document.
     Sections to keep in document:
-     1.Position:${position}, Type: ${typeOfPosition}
+     1.Position:${designation}, Type: ${typeOfPosition}
      2.Compensation: Base compensation, Incentive Bonus
      3.Benefits: Vacation, Benefits Generally, Indemnification Rights
      4.Description of Duties

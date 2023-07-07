@@ -11,11 +11,11 @@ const generateContract = require("./generate_contract.js");
 
 app.post("/employee", async (req, res) => {
   console.log(req.body);
-  const position = req.body.position;
+  const designation = req.body.designation;
   const typeOfPosition = req.body.typeOfPosition;
   const organization = req.body.organization;
   let contract = await generateContract.fetchEmployeeContract(
-    position,
+    designation,
     typeOfPosition,
     organization
   );

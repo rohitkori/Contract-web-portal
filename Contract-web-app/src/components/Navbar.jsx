@@ -12,7 +12,7 @@ export default function Navbar() {
   const navigation = [
     { name: "Home", href: "/", current: true },
     { name: "About", href: "/about", current: false },
-    { name: "Why", href: "/why", current: false },
+    // { name: "Why", href: "/why", current: false },
   ];
   
   return (

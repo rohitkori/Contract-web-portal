@@ -40,7 +40,8 @@ function Contract(props) {
     <form className="bg-gray-900">
       <div className="w-full h-screen mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
         <div className="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
-          <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+          <div className="flex flex-wrap font-medium items-center divide-gray-200  sm:divide-x dark:divide-gray-600 ">
+            Editor
           </div>
           <div
             type="submit"

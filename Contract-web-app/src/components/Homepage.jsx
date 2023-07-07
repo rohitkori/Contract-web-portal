@@ -70,41 +70,66 @@ const Homepage = () => {
     if (contractType === "Employee") {
       return (
         <>
-          <form onSubmit={handleSubmit} className="flex flex-col">
-            <label
-              htmlFor="position"
-              className="  my-1 sm:my-2 md:my-4 md:text-xl"
-            >
-              Position
-            </label>
-            <input
-              type="text"
-              name="position"
-              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
-            />
-            <label
-              htmlFor="organization"
-              className="  my-1 sm:my-2 md:my-4 md:text-xl"
-            >
-              Organization
-            </label>
-            <input
-              type="text"
-              name="organization"
-              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
-            />
-            <label
-              htmlFor="typeOfPosition"
-              className="  my-1 sm:my-2 md:my-4 md:text-xl"
-            >
-              Type of Position
-            </label>
-            <input
-              type="text"
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-evenly"
+          >
+            <div className="flex flex-row mt-1 sm:mt-3 md:mt-4 justify-between">
+              <label
+                htmlFor="designation"
+                className=" mt-1 mb-0.5 sm:mt-2 sm:mb-1 md:mt-4 md:mb-2 md:text-xl"
+              >
+                Designation
+              </label>
+              <input
+                type="text"
+                name="designation"
+                className="bg-slate-950 rounded-md border-2 border-stone-50 mt-1 mb-0.5 sm:mt-2 sm:mb-1 md:mb-2 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 text-center sm:py-1 "
+              />
+            </div>
+            <div className="flex flex-row mt-0.5 sm:mt-3  md:mt-2 justify-between">
+              <label
+                htmlFor="organization"
+                className="  mt-1 mb-0.5 sm:mt-2 sm:mb-1 md:mt-4 md:mb-2 md:text-xl"
+              >
+                Organization
+              </label>
+              <input
+                type="text"
+                name="organization"
+                className="bg-slate-950 rounded-md border-2 border-stone-50 mt-1 mb-0.5 sm:mt-2 sm:mb-1 md:mt-4 md:mb-2 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 text-center sm:py-1 "
+              />
+            </div>
+            {/* <div className=""> */}
+            <select
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:my-2 md:my-3"
               name="typeOfPosition"
-              className="bg-slate-950 rounded-md border-2 border-stone-50 my-1 shadow-lg shadow-blue-950/50 hover:shadow-blue-950 sm:my-2 md:my-4 text-center sm:py-1 md:py-1.5 "
-            />
-            <div className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            >
+              <option value="none" selected disabled hidden>
+                Select a Type
+              </option>
+              <option
+                value="Corporate"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                Corporate
+              </option>
+              <option
+                value="RnD"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                RnD
+              </option>
+              <option
+                value="Government"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                Government
+              </option>
+              <option value="Other">Other</option>
+            </select>
+            {/* </div> */}
+            <div className="text-white bg-blue-700 hover:bg-blue-800 mt-0.5 sm:mt-3  md:mt-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <input type="submit" />
             </div>
           </form>
@@ -122,12 +147,12 @@ const Homepage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const position = e.target.position.value;
+    const designation = e.target.designation.value;
     const organization = e.target.organization.value;
     const typeOfPosition = e.target.typeOfPosition.value;
-    console.log(position, organization);
+    console.log(designation, organization);
     const response = await axios.post(`${backendUrl}/employee`, {
-      position: position,
+      designation: designation,
       organization: organization,
       typeOfPosition: typeOfPosition,
     });
@@ -148,8 +173,9 @@ const Homepage = () => {
     <>
       {loading ? (
         <>
-          <div className="bg-gray-950 min-h-screen max-w-full pt-4  flex flex-col md:flex-row justify-evenly items-center text-center text-white ">
+          <div className="bg-gray-950 min-h-screen max-w-full pt-4 flex flex-col justify-evenly items-center text-center text-white ">
             <img src={Loader} alt="" />
+            <h1 className="text-2xl">Generating, this may take a while</h1>
           </div>
         </>
       ) : (
@@ -165,7 +191,7 @@ const Homepage = () => {
                   alt=""
                 />
               </div>
-              <div className="homepage-right-container flex flex-col items-center">
+              <div className="homepage-right-container flex flex-col items-stretch">
                 <h1 className=" text-xl sm:text-2xl md:text-4xl font-bold  text-center text-white my-1 sm:my-2 md:my-4">
                   GET YOUR CONTRACT
                 </h1>
